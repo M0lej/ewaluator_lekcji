@@ -22,7 +22,7 @@ export default function SessionLobby() {
   const router = useRouter();
   useEffect(() => {
     const checkSession = async () => {
-      const sessionCode = pagePath.split("/").pop();
+      const sessionCode = decodeURIComponent(pagePath.split("/").pop() || "");
       setLoading(true);
       const res = await axios.get(`/api/sessions/${sessionCode}`);
       if (res.status !== 200 || !res) {
@@ -32,10 +32,38 @@ export default function SessionLobby() {
       }
       const data = await res.data;
       if (!data.session) {
-        alert("Nie znaleziono sesji o podanym kodzie.");
+        alert("Sesja o podanym kodzie nie istnieje lub straciła ważność.");
         setLoading(false);
         router.push("/sessions/join");
       } else {
+        const sessionHistoryCodes =
+          JSON.parse(localStorage.getItem("session_history_codes") as string) ||
+          [];
+        if (
+          sessionHistoryCodes.findIndex(
+            (s: { sessionCode: string }) => s.sessionCode === sessionCode
+          ) == -1
+        ) {
+          const date = new Date();
+          localStorage.setItem(
+            "session_history_codes",
+            JSON.stringify([
+              ...sessionHistoryCodes,
+              {
+                date: `${date.getDate() < 10 ? "0" : ""}${date.getDate()}/${
+                  date.getMonth() + 1 < 10 ? "0" : ""
+                }${date.getMonth() + 1}/${date.getFullYear()} ${
+                  date.getHours() < 10 ? "0" : ""
+                }${date.getHours()}:${
+                  date.getMinutes() < 10 ? "0" : ""
+                }${date.getMinutes()}`,
+                sessionCode,
+                name: null,
+              },
+            ])
+          );
+        }
+
         setQuestion({ questionId: 0, text: data.session.questions[0] || "" });
         setSessionData(data.session);
         setIsHost(data.isHost);

@@ -13,7 +13,7 @@ const AnswerSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-AnswerSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
+AnswerSchema.index({ createdAt: 1 }, { expireAfterSeconds: 2629743 }); // approx. 1 month
 
 const AnswerModel =
   mongoose.models.Answers || mongoose.model("Answers", AnswerSchema);

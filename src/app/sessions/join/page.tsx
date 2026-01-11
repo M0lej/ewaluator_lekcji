@@ -12,7 +12,7 @@ export default function JoinPage() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const sessionId = formData.get("sessionId") as string;
-    router.push(`/sessions/${sessionId}`);
+    router.push(`/sessions/${encodeURIComponent(sessionId)}`);
   };
   return (
     <form className="flex flex-col gap-5 w-full md:w-fit" onSubmit={onSubmit}>

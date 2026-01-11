@@ -88,7 +88,30 @@ export default function CreateSession() {
     setLoading(false);
     if (res) {
       const sessionData = res.data.newSession;
-      router.push(`/sessions/${sessionData.sessionCode}`);
+
+      let sessionName = "";
+      if (e.target) {
+        const formData = new FormData(e.target as HTMLFormElement);
+        sessionName = (formData.get("name") as string) || "";
+      }
+      const sessionHistoryCodes =
+        JSON.parse(localStorage.getItem("session_history_codes") as string) ||
+        [];
+
+      const date = new Date();
+      localStorage.setItem(
+        "session_history_codes",
+        JSON.stringify([
+          ...sessionHistoryCodes,
+          {
+            date: date,
+            sessionCode: sessionData.sessionCode,
+            name: sessionName,
+          },
+        ])
+      );
+
+      router.push(`/sessions/${encodeURIComponent(sessionData.sessionCode)}`);
     }
   };
   return (
@@ -100,7 +123,17 @@ export default function CreateSession() {
         className="w-full md:w-1/2 h-fit my-3 p-3  flex flex-col text-purple-500 gap-3  box-border scroll-auto border-purple-500 md:border-2 rounded-2xl"
         onSubmit={onFormSubmit}
       >
-        {questions.map((question, i) => (
+        <label className="flex items-center gap-3">
+          <h2>Nazwa</h2>
+          <Input
+            type="text"
+            className="w-full"
+            placeholder="..."
+            name="name"
+            required
+          />
+        </label>
+        {questions.map((_, i) => (
           <QuestionCreatorBox
             index={i + 1}
             last={i === questions.length - 1}

@@ -11,7 +11,7 @@ const SessionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-SessionSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
+SessionSchema.index({ createdAt: 1 }, { expireAfterSeconds: 2629743 }); // approx. 1 month
 
 const SessionModel =
   mongoose.models.Sessions || mongoose.model("Sessions", SessionSchema);
