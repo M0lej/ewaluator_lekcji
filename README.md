@@ -108,7 +108,7 @@ Główne założenia projektu to:
 * Responsywny interfejs wykorzystujący Tailwind CSS.
 * Modularna i łatwa w utrzymaniu struktura aplikacji.
 
-## Screenshots
+## Zrzuty ekranu
 
 <p align="center">
 <img width="1920" height="965" alt="ewaluator" src="https://github.com/user-attachments/assets/0314ad3e-5095-47c4-be38-b6c1fe6b06e8" />
