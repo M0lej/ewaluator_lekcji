@@ -1,3 +1,5 @@
+[Demo](https://ewaluator-lekcji.netlify.app/)
+
 # Ewaluator Lekcji
 
 Aplikacja webowa stworzona w **Next.js**, umożliwiająca nauczycielom szybkie sprawdzenie, w jakim stopniu uczniowie rozumieją zagadnienia omawiane podczas lekcji. Nauczyciel może utworzyć sesję z własnymi pytaniami, a uczniowie dołączają do niej za pomocą kodu QR i oceniają poziom zrozumienia poszczególnych tematów.
